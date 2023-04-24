@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1076187818833",
+    "firebase_url": "https://vegan-meet-76339-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "vegan-meet-76339",
+    "storage_bucket": "vegan-meet-76339.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076187818833:android:0a94057487729007280170",
+        "android_client_info": {
+          "package_name": "com.example.vegan_meet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076187818833-aktsktb8avr4toe6bmg0p2i8vsoofq5d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuCQ9I-mwFwyCqSkDGKp7GBlNmHUekHw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076187818833-aktsktb8avr4toe6bmg0p2i8vsoofq5d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1076187818833-t0d77idjtpjmov3da8qkntnr840qpedr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.veganMeet"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
