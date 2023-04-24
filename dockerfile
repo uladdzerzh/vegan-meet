@@ -1,35 +1,41 @@
 # Use the official Flutter image as the base image
 FROM cirrusci/flutter:latest
 
+# Create a non-root user and set the home directory
+RUN useradd -m -d /home/flutter flutter
+
+# Change the ownership of the /sdks/flutter directory to the non-root user
+RUN chown -R flutter:flutter /sdks/flutter
+
+# Switch to the non-root user
+USER flutter
+
 # Set the working directory
 WORKDIR /app
 
-# Copy your pubspec.yaml file into the container
-COPY pubspec.yaml .
+# Copy the pubspec.yaml file into the container
+COPY --chown=flutter:flutter pubspec.yaml .
 
-# Install app dependencies
+# Install the Flutter dependencies
 RUN flutter pub get
 
-# Copy the rest of your app's source code
-COPY . .
+# Copy the rest of the source code
+COPY --chown=flutter:flutter . .
 
-# Build the app for the web platform
-RUN flutter build web --release
+# Build the Flutter app for the web
+RUN flutter build web
 
-# Use the official Nginx image as the base image for the runtime container
-FROM nginx:stable
+# Switch back to the root user
+USER root
 
-# Remove the default Nginx configuration
-RUN rm /etc/nginx/conf.d/default.conf
+# Expose the port the app will run on
+EXPOSE 8080
 
-# Add our custom Nginx configuration
-COPY nginx.conf /etc/nginx/conf.d
+# Use a lightweight server to serve the app
+FROM nginx:alpine
 
-# Copy the built app from the build container
+# Copy the built app from the previous stage
 COPY --from=0 /app/build/web /usr/share/nginx/html
 
-# Expose the default Nginx port
-EXPOSE 80
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Copy the default nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
