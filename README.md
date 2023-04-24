@@ -13,6 +13,7 @@ Vegan Meet is a Flutter app that helps vegans, vegetarians, and other plant-base
 Execute the following commands in the terminal:
 
 $ docker build -t vegan_meet .
+
 $ docker run --rm -p 8080:80 vegan_meet
 
 App will be available at http://localhost:8080
