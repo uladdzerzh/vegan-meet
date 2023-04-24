@@ -1,16 +1,9 @@
-# vegan_meet
+# Vegan Meet
 
-A new Flutter project.
+Vegan Meet is a Flutter app that helps vegans, vegetarians, and other plant-based dieters connect with each other. Users can register, sign in, and view a list of other registered users.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- User registration and authentication using Firebase Auth
+- User profiles stored in Cloud Firestore
+- Display a list of all registered users
