@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:vegan_meet/services/auth_service.dart';
 import 'package:vegan_meet/services/database_service.dart';
 import 'package:vegan_meet/screens/login_screen.dart';
+import 'package:vegan_meet/screens/register_screen.dart';
+import 'package:vegan_meet/services/image_picker_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         Provider<DatabaseService>(
           create: (_) => DatabaseService(),
+        ),
+        Provider<ImagePickerService>(
+          create: (context) => ImagePickerService(),
         ),
       ],
       child: MaterialApp(

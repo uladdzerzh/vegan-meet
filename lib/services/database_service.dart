@@ -1,9 +1,13 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:vegan_meet/models/user_model.dart';
 
 class DatabaseService {
   final CollectionReference _userCollection =
   FirebaseFirestore.instance.collection('users');
+
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   // Get user information by uid
   Future<UserModel?> getUser(String uid) async {
@@ -36,5 +40,28 @@ class DatabaseService {
         querySnapshot.docs
             .map((doc) => UserModel.fromDocumentSnapshot(doc))
             .toList());
+  }
+
+  // Upload profile image to Firebase Storage
+  Future<String> uploadProfileImage(String uid, File image) async {
+    try {
+      final ref = _firebaseStorage.ref().child('profile_images').child('$uid.jpg');
+      await ref.putFile(image);
+      return await ref.getDownloadURL();
+    } catch (e) {
+      print('Error uploading image: $e');
+      return '';
+    }
+  }
+
+  // Get profile image URL from Firebase Storage
+  Future<String> getProfileImageUrl(String uid) async {
+    try {
+      final ref = _firebaseStorage.ref().child('profile_images').child('$uid.jpg');
+      return await ref.getDownloadURL();
+    } catch (e) {
+      print('Error getting image URL: $e');
+      return '';
+    }
   }
 }

@@ -13,6 +13,7 @@ class UserModel {
   String lastName;
   String city;
   DietType dietType;
+  String imageUrl;
 
   UserModel({
     required this.uid,
@@ -20,13 +21,14 @@ class UserModel {
     required this.lastName,
     required this.city,
     required this.dietType,
+    required this.imageUrl,
   });
 
   factory UserModel.fromDocumentSnapshot(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     DietType dietType = DietType.values.firstWhere(
             (e) => e.toString().split('.').last == data['dietType'],
-            orElse: () => DietType.vegan);
+        orElse: () => DietType.vegan);
 
     return UserModel(
       uid: data['uid'],
@@ -34,6 +36,7 @@ class UserModel {
       lastName: data['lastName'],
       city: data['city'],
       dietType: dietType,
+      imageUrl: data['imageUrl'] ?? '',
     );
   }
 
@@ -45,6 +48,7 @@ class UserModel {
       'lastName': lastName,
       'city': city,
       'dietType': dietType.toString().split('.').last,
+      'imageUrl': imageUrl,
     };
   }
 }

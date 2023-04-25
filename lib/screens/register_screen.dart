@@ -1,12 +1,13 @@
 // this file contains the code for the register screen
 
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vegan_meet/models/user_model.dart';
 import 'package:vegan_meet/screens/home_screen.dart';
 import 'package:vegan_meet/services/auth_service.dart';
 import 'package:vegan_meet/services/database_service.dart';
+import 'package:vegan_meet/services/image_picker_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -20,11 +21,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   DietType? _selectedDietType;
+  File? _pickedImage;
 
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     final databaseService = Provider.of<DatabaseService>(context);
+    final imagePickerService = Provider.of<ImagePickerService>(context);
+    final storageService = Provider.of<DatabaseService>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,6 +39,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            _pickedImage != null
+                ? Image.file(
+                    _pickedImage!,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  )
+                : Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.grey,
+                  ),
+            IconButton(
+              icon: Icon(Icons.add_a_photo),
+              onPressed: () async {
+                File? pickedImage = await imagePickerService.pickImage();
+                setState(() {
+                  _pickedImage = pickedImage;
+                });
+              },
+            ),
             TextField(
               controller: _emailController,
               decoration: InputDecoration(labelText: 'Email'),
@@ -84,12 +109,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 );
 
                 if (uid != null) {
+                  String imageUrl = '';
+                  if (_pickedImage != null) {
+                    imageUrl = await databaseService.uploadProfileImage(
+                        uid, _pickedImage!);
+                  }
+
                   UserModel newUser = UserModel(
                     uid: uid,
                     firstName: _firstNameController.text,
                     lastName: _lastNameController.text,
                     city: _cityController.text,
                     dietType: _selectedDietType!,
+                    imageUrl: imageUrl,
                   );
 
                   await databaseService.updateUser(newUser);

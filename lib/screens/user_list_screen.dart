@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:vegan_meet/models/user_model.dart';
 import 'package:vegan_meet/services/database_service.dart';
 
+
 class UserListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,8 @@ class UserListScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        if (user.imageUrl.isNotEmpty)
+                          Image.network(user.imageUrl),
                         Text('First Name: ${user.firstName}',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         Text('Last Name: ${user.lastName}',
