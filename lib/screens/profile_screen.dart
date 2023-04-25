@@ -12,6 +12,10 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String imageUrl = user.imageUrl.isNotEmpty && user.imageUrl.startsWith('http')
+        ? user.imageUrl
+        : 'https://via.placeholder.com/150';
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -32,6 +36,20 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Center(
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage(imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
             Text('First Name: ${user.firstName}'),
             SizedBox(height: 8),
             Text('Last Name: ${user.lastName}'),
