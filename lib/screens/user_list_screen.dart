@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:vegan_meet/models/user_model.dart';
 import 'package:vegan_meet/services/database_service.dart';
-
 
 class UserListScreen extends StatelessWidget {
   @override
@@ -24,16 +22,15 @@ class UserListScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final user = users[index];
                 return Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Column(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 40.0,
+                      backgroundImage: NetworkImage(user.imageUrl),
+                    ),
+                    title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (user.imageUrl.isNotEmpty)
-                          Image.network(user.imageUrl),
-                        Text('First Name: ${user.firstName}',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text('Last Name: ${user.lastName}',
+                        Text('${user.firstName} ${user.lastName}',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         Text('City: ${user.city}'),
                         Text('Diet Type: ${user.dietType.toString().split('.').last}'),
