@@ -19,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     return Scaffold(
-      appBar: AppBar(title: Text('Vegan Meet - Login')),
+      appBar: AppBar(title: const Text('Vegan Meet - Login')),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -28,26 +28,26 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               TextField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: const InputDecoration(labelText: 'Password'),
                 obscureText: true,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   final userCredential = await authService.signIn(_emailController.text, _passwordController.text);
                   if (userCredential != null) {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                      MaterialPageRoute(builder: (context) => const HomeScreen()),
                     );
                   }
                 },
-                child: Text('Login'),
+                child: const Text('Login'),
               ),
               TextButton(
                 onPressed: () {
@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     MaterialPageRoute(builder: (context) => RegisterScreen()),
                   );
                 },
-                child: Text('Register'),
+                child: const Text('Register'),
               ),
             ],
           ),

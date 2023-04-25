@@ -4,13 +4,15 @@ import 'package:vegan_meet/models/user_model.dart';
 import 'package:vegan_meet/services/database_service.dart';
 
 class UserListScreen extends StatelessWidget {
+  const UserListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final databaseService = Provider.of<DatabaseService>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registered Users'),
+        title: const Text('Registered Users'),
       ),
       body: StreamBuilder<List<UserModel>>(
         stream: databaseService.getUsers(),
@@ -31,7 +33,7 @@ class UserListScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('${user.firstName} ${user.lastName}',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+                            style: const TextStyle(fontWeight: FontWeight.bold)),
                         Text('City: ${user.city}'),
                         Text('Diet Type: ${user.dietType.toString().split('.').last}'),
                       ],
@@ -43,7 +45,7 @@ class UserListScreen extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
